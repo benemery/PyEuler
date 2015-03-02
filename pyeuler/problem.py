@@ -5,7 +5,7 @@ class Problem(object):
         self.text = ""
         self.solution = solution
         self.test = None
-        self.correctly_solved = False
+        self.correctly_solved = None
         self.result = None
 
     def solve(self):

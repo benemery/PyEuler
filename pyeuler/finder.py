@@ -7,12 +7,15 @@ from pyeuler.problem import Problem
 
 file_match_re = re.compile(r'(\d+)\.py$')
 
-def find_problems(top):
+def find_problems(top, problems_to_find=None):
     """Find problems to test starting at `top`."""
     # Add the parent directory to our python path so imports work
     parent_dir = os.path.join(top, os.pardir)
     sys.path.append(os.path.abspath(parent_dir))
     sys.path.append(os.path.abspath(top))
+
+    if not problems_to_find:
+        problems_to_find = []
 
     # This list will contain the problem functions to be executed
     problems = []
@@ -26,7 +29,10 @@ def find_problems(top):
 
                 module = imp.load_module(module_name, file, pathname, description)
 
-                problems.append(Problem(number=module_name, solution=module.main))
+                problem = Problem(number=module_name, solution=module.main)
+
+                if problems_to_find and problem.number in problems_to_find:
+                    problems.append(problem)
 
     # Sort the problems in their order
     problems.sort(key=lambda problem: problem.number)

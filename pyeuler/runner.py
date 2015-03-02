@@ -21,6 +21,8 @@ def solve_problems(problems, solutions, timeout=60):
             problem = output_queue.get()
             if problem.correctly_solved:
                 message += ' ' + colored.green('OK')
+            elif problem.correctly_solved is None:
+                message += ' ' + colored.yellow('Solution Unkown: [Result : %s]' % str(problem.result))
             else:
                 message += ' ' + colored.red('FAIL. [Result: %s]' % problem.result)
 
@@ -29,5 +31,6 @@ def solve_problems(problems, solutions, timeout=60):
 
 def test_problem(problem, solutions, output_queue):
     result = problem.solve()
-    problem.correctly_solved = result == solutions[str(problem.number)]
+    if str(problem.number) in solutions:
+        problem.correctly_solved = result == solutions[str(problem.number)]
     output_queue.put(problem)

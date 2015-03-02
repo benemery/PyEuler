@@ -1,18 +1,20 @@
 """Py.Euler. A command line tool to help you Project Euler fun!
 
 Usage:
-    py.euler [PATH] [--timeout TIMEOUT]
+    py.euler [PATH] [--timeout=TIMEOUT] [--problem=PROBLEM]
     py.euler (-h | --help)
     py.euler --version
 
 Arguments:
     PATH        Path to begin searching from.
-    TIMEOUT     How long to give each solution. Project Euler specifies
-                that no problem should take longer than 60s [default: 60].
 
 Options:
-    -h --help   Show this screen.
-    --version   Show version.
+    -h --help               Show this screen.
+    --version               Show version.
+    --timeout=TIMEOUT       How long to give each solution. Project Euler
+                            specifies that no problem should take longer
+                            than 60s [default: 60].
+    --problem=PROBLEM       The problem number check
 """
 
 VERSION = "0.0.1"
@@ -36,8 +38,9 @@ def main():
     args = docopt(__doc__, version=VERSION)
 
     root = args['PATH']
-    timeout = int(args['TIMEOUT'])
-    problems = find_problems(root)
+    timeout = int(args["--timeout"])
+    problem = int(args['--problem'])
+    problems = find_problems(root, problems_to_find=[problem, ])
 
     with open(os.path.join(BASE_DIR, 'solutions.txt'), 'rb') as fin:
         solutions = json.loads(fin.read())
