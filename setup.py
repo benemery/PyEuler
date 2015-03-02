@@ -3,7 +3,7 @@ from distutils.core import setup, Command
 
 from pyeuler import VERSION
 
-with open('README.md', 'rb') as fin:
+with open('README.rst', 'rb') as fin:
     README = fin.read()
 
 PACKAGE_NAME = 'pyeuler'
