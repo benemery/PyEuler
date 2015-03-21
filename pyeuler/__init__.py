@@ -39,8 +39,10 @@ def main():
 
     root = args['PATH']
     timeout = int(args["--timeout"])
-    problem = int(args['--problem'])
-    problems = find_problems(root, problems_to_find=[problem, ])
+    problems_to_find = []
+    if args['--problem']:
+        problems_to_find.append(int(args['--problem']))
+    problems = find_problems(root, problems_to_find=problems_to_find)
 
     with open(os.path.join(BASE_DIR, 'solutions.txt'), 'rb') as fin:
         solutions = json.loads(fin.read())

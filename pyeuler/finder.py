@@ -30,8 +30,7 @@ def find_problems(top, problems_to_find=None):
                 module = imp.load_module(module_name, file, pathname, description)
 
                 problem = Problem(number=module_name, solution=module.main)
-
-                if problems_to_find and problem.number in problems_to_find:
+                if not problems_to_find or problem.number in problems_to_find:
                     problems.append(problem)
 
     # Sort the problems in their order
